@@ -1,4 +1,4 @@
-const CACHE_NAME = 'daily-tracker-v1';
+const CACHE_NAME = 'daily-tracker-v2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -17,10 +17,36 @@ self.addEventListener('install', (e) => {
     );
 });
 
+// Clean up old caches
+self.addEventListener('activate', (e) => {
+    e.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// Network-first strategy with cache fallback
 self.addEventListener('fetch', (e) => {
     e.respondWith(
-        caches.match(e.request).then((response) => {
-            return response || fetch(e.request);
-        })
+        fetch(e.request)
+            .then((response) => {
+                // If network fetch is successful, update cache and return response
+                const responseClone = response.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(e.request, responseClone);
+                });
+                return response;
+            })
+            .catch(() => {
+                // If network fails (offline), return cached version
+                return caches.match(e.request);
+            })
     );
 });
