@@ -288,6 +288,21 @@ tbody tr:hover .delete-btn {
     }
 }
 
+/* Present Day Glow Effect */
+.current-day {
+    background-color: rgba(92, 122, 95, 0.08); /* Subtle sage green tint */
+}
+
+th.current-day {
+    position: relative;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+td.current-day {
+    position: relative;
+}
+
 .hidden {
     display: none !important;
 }

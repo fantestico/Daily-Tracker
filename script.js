@@ -41,7 +41,7 @@ function loadState() {
 
     if (parsed) {
         state.tasks = parsed.tasks || [];
-        state.pageOffset = parsed.pageOffset || 0;
+        state.pageOffset = 0; // Always open directly on the present day
         
         // Handle migration from previous format if needed
         if (parsed.dayCount !== undefined && !parsed.dates) {
@@ -114,8 +114,11 @@ function renderHeaders() {
     thEmpty.className = 'tasks-header';
     trTop.appendChild(thEmpty);
     
+    const todayStr = new Date().toISOString().split('T')[0];
+    
     currentViewDates.forEach(dateStr => {
         const thProgress = document.createElement('th');
+        if (dateStr === todayStr) thProgress.classList.add('current-day');
         
         // Calculate progress for this date
         const total = state.tasks.length;
@@ -141,6 +144,7 @@ function renderHeaders() {
     
     currentViewDates.forEach(dateStr => {
         const thDay = document.createElement('th');
+        if (dateStr === todayStr) thDay.classList.add('current-day');
         // Parse date considering timezone correctly
         const parts = dateStr.split('-');
         const d = new Date(parts[0], parts[1] - 1, parts[2]);
@@ -152,6 +156,8 @@ function renderHeaders() {
 
 function renderTasks() {
     tableTbody.innerHTML = '';
+    const todayStr = new Date().toISOString().split('T')[0];
+    
     state.tasks.forEach((task, index) => {
         const tr = document.createElement('tr');
         
@@ -195,6 +201,7 @@ function renderTasks() {
         currentViewDates.forEach(dateStr => {
             const tdDay = document.createElement('td');
             tdDay.className = 'day-cell';
+            if (dateStr === todayStr) tdDay.classList.add('current-day');
             
             const isChecked = task.completions && task.completions[dateStr];
             
