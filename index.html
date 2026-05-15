@@ -10,31 +10,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Login Overlay -->
-    <div id="login-overlay" class="login-overlay">
-        <div class="login-modal">
-            <h2>Welcome Back</h2>
-            <p>Log in to access your tasks.</p>
-            <input type="text" id="username-input" placeholder="Enter your username" autocomplete="off" />
-            <button id="login-btn" class="btn-outline" style="background-color: var(--accent); color: white;">Log In</button>
-        </div>
-    </div>
-
-    <div class="app-container hidden">
+    <div class="app-container">
         <header class="app-header">
             <div class="header-content">
                 <div class="title-area">
                     <h1>Daily Tracker</h1>
                     <p class="subtitle">Track your progress, day by day.</p>
-                <div class="header-right">
-                    <div class="user-info">
-                        <span id="user-greeting" class="user-greeting"></span>
-                        <button id="logout-btn" class="btn-text logout-btn">Log out</button>
-                    </div>
-                    <div class="pagination-controls">
-                        <button id="prev-page-btn" class="btn-outline">&larr; Previous</button>
-                        <button id="next-page-btn" class="btn-outline">Next &rarr;</button>
-                    </div>
+                </div>
+                <div class="pagination-controls">
+                    <button id="prev-page-btn" class="btn-outline">&larr; Previous</button>
+                    <button id="next-page-btn" class="btn-outline">Next &rarr;</button>
                 </div>
             </div>
             <hr class="header-divider">

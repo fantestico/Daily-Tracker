@@ -1,7 +1,8 @@
-let currentUser = null;
+// State structure
+// tasks: [{ id, name, completions: { '2026-05-15': true } }]
+// pageOffset: 0 (0 means current page ends today, -1 means ends 10 days before today)
 
 let state = {
-    dates: [],
     tasks: [],
     pageOffset: 0
 };
@@ -16,67 +17,19 @@ const prevPageBtn = document.getElementById('prev-page-btn');
 const nextPageBtn = document.getElementById('next-page-btn');
 const addTaskBtn = document.getElementById('add-task-btn');
 
-// Login Elements
-const loginOverlay = document.getElementById('login-overlay');
-const appContainer = document.querySelector('.app-container');
-const loginBtn = document.getElementById('login-btn');
-const usernameInput = document.getElementById('username-input');
-const userGreeting = document.getElementById('user-greeting');
-const logoutBtn = document.getElementById('logout-btn');
-
 // Initialization
 function init() {
-    const sessionUser = sessionStorage.getItem('dailyTrackerUser');
-    if (sessionUser) {
-        loginUser(sessionUser);
-    }
-    
-    loginBtn.addEventListener('click', handleLogin);
-    usernameInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleLogin();
-    });
-    
-    logoutBtn.addEventListener('click', handleLogout);
+    loadState();
+    updateViewDates();
+    render();
     
     prevPageBtn.addEventListener('click', prevPage);
     nextPageBtn.addEventListener('click', nextPage);
     addTaskBtn.addEventListener('click', addTask);
 }
 
-function handleLogin() {
-    const user = usernameInput.value.trim();
-    if (user) {
-        loginUser(user);
-    }
-}
-
-function loginUser(username) {
-    currentUser = username;
-    sessionStorage.setItem('dailyTrackerUser', username);
-    userGreeting.textContent = `Hello, ${username}`;
-    
-    loginOverlay.classList.add('hidden');
-    appContainer.classList.remove('hidden');
-    
-    loadState();
-    updateViewDates();
-    render();
-}
-
-function handleLogout() {
-    currentUser = null;
-    sessionStorage.removeItem('dailyTrackerUser');
-    
-    tableThead.innerHTML = '';
-    tableTbody.innerHTML = '';
-    
-    appContainer.classList.add('hidden');
-    loginOverlay.classList.remove('hidden');
-    usernameInput.value = '';
-}
-
 function loadState() {
-    const saved = localStorage.getItem(`dailyTracker_${currentUser}`);
+    const saved = localStorage.getItem('dailyTracker');
     let parsed = null;
     if (saved) {
         try {
@@ -90,13 +43,20 @@ function loadState() {
         state.tasks = parsed.tasks || [];
         state.pageOffset = parsed.pageOffset || 0;
         
+        // Handle migration from previous format if needed
         if (parsed.dayCount !== undefined && !parsed.dates) {
+            // Already migrated in previous step or needs migration again? 
+            // Since it was already migrated to dates format earlier,
+            // the old "days" array shouldn't exist.
+            // But if they have it from the first stitch, it might.
+            // We just let the previous migration logic be if needed,
+            // but assuming the previous step ran, parsed.tasks has completions.
             state.tasks.forEach(t => {
                 if (!t.completions) t.completions = {};
             });
         }
     } else {
-        // First time load for this user
+        // First time load
         state.pageOffset = 0;
         state.tasks = [];
         saveState();
@@ -104,8 +64,7 @@ function loadState() {
 }
 
 function saveState() {
-    if (!currentUser) return;
-    localStorage.setItem(`dailyTracker_${currentUser}`, JSON.stringify(state));
+    localStorage.setItem('dailyTracker', JSON.stringify(state));
 }
 
 function generateId() {
