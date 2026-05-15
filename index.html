@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="title-area">
+                    <h1>Daily Tracker</h1>
+                    <p class="subtitle">Track your progress, day by day.</p>
+                </div>
+                <div class="pagination-controls">
+                    <button id="prev-page-btn" class="btn-outline">&larr; Previous</button>
+                    <button id="next-page-btn" class="btn-outline">Next &rarr;</button>
+                </div>
+            </div>
+            <hr class="header-divider">
+        </header>
+
+        <main class="app-main">
+            <div class="table-container">
+                <table id="tracker-table">
+                    <thead>
+                        <!-- Populated by JS -->
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="100%" class="add-task-cell">
+                                <button id="add-task-btn" class="btn-text">+ Add task</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </main>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

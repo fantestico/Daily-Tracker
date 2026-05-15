@@ -1,0 +1,289 @@
+:root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --border: #E2DDD6;
+    --text-primary: #1C1C1A;
+    --text-secondary: #7A7670;
+    --accent: #5C7A5F;
+    --accent-light: #EAF0EA;
+    --accent-hover: #4A6650;
+    --checkbox-done: #5C7A5F;
+    --checkbox-empty: #D4CFC8;
+    --danger: #C0392B;
+    --shadow: rgba(0,0,0,0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.5;
+    padding: 32px 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Header */
+.app-header .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.app-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.header-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border);
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+    background: none;
+    transition: all 150ms ease;
+}
+
+.btn-outline {
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    background-color: transparent;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-light);
+}
+
+.btn-text {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 16px;
+    width: 100%;
+    text-align: left;
+}
+
+.btn-text:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    transform: translateY(-1px);
+}
+
+/* Table */
+.table-container {
+    width: 100%;
+    background: var(--surface);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px var(--shadow);
+    overflow-x: auto;
+}
+
+#tracker-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 600px;
+}
+
+th, td {
+    padding: 14px 16px;
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+thead th {
+    background-color: var(--bg);
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    text-align: center;
+}
+
+thead th.tasks-header {
+    text-align: left;
+    width: 220px;
+    min-width: 220px;
+}
+
+thead tr:first-child th {
+    border-bottom: none;
+    padding-bottom: 8px;
+    padding-top: 16px;
+    font-size: 12px;
+}
+
+.progress-text {
+    margin-bottom: 6px;
+    color: var(--accent);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--checkbox-empty);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    transition: width 300ms ease;
+}
+
+thead tr:last-child th {
+    padding-top: 4px;
+}
+
+/* Task Rows */
+tbody tr {
+    transition: background 150ms ease;
+    position: relative;
+    animation: slideIn 250ms ease-out;
+}
+
+tbody tr:hover {
+    background-color: var(--accent-light);
+}
+
+.task-cell {
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    cursor: text;
+}
+
+.task-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+}
+
+.day-cell {
+    text-align: center;
+}
+
+/* Custom Checkbox */
+.checkbox-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--checkbox-empty);
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: background 200ms ease, border-color 200ms ease;
+}
+
+.checkbox-container.checked {
+    background-color: var(--checkbox-done);
+    border-color: var(--checkbox-done);
+    animation: checkBounce 200ms ease;
+}
+
+.checkmark {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    stroke-width: 2.5;
+    fill: none;
+    opacity: 0;
+    transition: opacity 150ms ease;
+}
+
+.checkbox-container.checked .checkmark {
+    opacity: 1;
+}
+
+/* Delete Button */
+.delete-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 150ms ease, color 150ms ease;
+    padding: 4px;
+}
+
+tbody tr:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    color: var(--danger);
+}
+
+/* Footer */
+.app-footer p {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes checkBounce {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.0); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
