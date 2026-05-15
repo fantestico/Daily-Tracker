@@ -273,3 +273,45 @@ function deleteTask(id) {
 
 // Start
 init();
+
+// --- PWA Support ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(reg => {
+            console.log('ServiceWorker registered:', reg.scope);
+        }).catch(err => {
+            console.log('ServiceWorker registration failed:', err);
+        });
+    });
+}
+
+let deferredPrompt;
+const downloadBtn = document.getElementById('download-app-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can install the PWA
+    downloadBtn.classList.remove('hidden');
+});
+
+downloadBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        // Show the install prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+        downloadBtn.classList.add('hidden');
+    }
+});
+
+window.addEventListener('appinstalled', () => {
+    // Hide the app-provided install promotion
+    downloadBtn.classList.add('hidden');
+});

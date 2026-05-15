@@ -287,3 +287,7 @@ tbody tr:hover .delete-btn {
         transform: translateY(0);
     }
 }
+
+.hidden {
+    display: none !important;
+}
