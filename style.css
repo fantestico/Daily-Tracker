@@ -290,17 +290,24 @@ tbody tr:hover .delete-btn {
 
 /* Present Day Glow Effect */
 .current-day {
-    background-color: rgba(92, 122, 95, 0.08); /* Subtle sage green tint */
+    background-color: var(--accent-light) !important;
+    border-bottom: none !important;
 }
 
 th.current-day {
-    position: relative;
     color: var(--accent);
-    font-weight: 600;
+    font-weight: 700;
 }
 
-td.current-day {
-    position: relative;
+/* Add rounded corners to make the column look like a single pill/capsule */
+thead tr:first-child th.current-day {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+tbody tr:last-child td.current-day {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .hidden {
