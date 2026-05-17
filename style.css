@@ -335,6 +335,9 @@ tbody tr:last-child td.current-day {
         align-items: flex-start;
         gap: 16px;
     }
+    .pagination-controls {
+        align-self: flex-end;
+    }
     .app-header h1 {
         font-size: 32px;
     }
