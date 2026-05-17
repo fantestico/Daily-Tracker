@@ -115,6 +115,7 @@ button {
     border-radius: 8px;
     box-shadow: 0 2px 12px var(--shadow);
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #tracker-table {
@@ -145,6 +146,7 @@ thead th.tasks-header {
     text-align: left;
     width: 220px;
     min-width: 220px;
+    position: -webkit-sticky;
     position: sticky;
     left: 0;
     z-index: 3;
@@ -194,6 +196,7 @@ tbody tr:hover {
 .task-cell {
     font-size: 15px;
     font-weight: 500;
+    position: -webkit-sticky;
     position: sticky;
     left: 0;
     background-color: var(--surface);

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'daily-tracker-v2';
+const CACHE_NAME = 'daily-tracker-v3';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -6,10 +6,11 @@ const ASSETS_TO_CACHE = [
     './script.js',
     './icon.svg',
     './manifest.json',
-    'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap'
+    'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Pacifico&display=swap'
 ];
 
 self.addEventListener('install', (e) => {
+    self.skipWaiting();
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(ASSETS_TO_CACHE);
@@ -28,7 +29,7 @@ self.addEventListener('activate', (e) => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
 });
 
